@@ -1,26 +1,58 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div v-if="this.isAuthenticate">
+    <div v-if="['admin','developer'].includes(this.userData.rules.name)">
+      <Navbar/>
+    </div>
+    <div v-else>
+      <NavbarClient/>
+    </div>
+    <div class="container mb-3">
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <div class="card">
+                  <nav aria-label="breadcrumb">
+                      <ol class="breadcrumb">
+                          <li class="breadcrumb-item" :class="{active:breadCrumb.active }" v-for="breadCrumb, index in this.$route.meta.breadCrumb" v-bind:key="index"> <router-link v-if="breadCrumb.active == false" :to="breadCrumb.to">{{breadCrumb.text}}</router-link> <span v-else>{{breadCrumb.text}}</span> </li>
+                      </ol>
+                  </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <router-view></router-view>
+  </div>
+  <div v-else>
+    <Auth/>
+  </div>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Auth from './module/auth/views/Auth.vue';
+import Navbar from './components/Navbar.vue';
+import NavbarClient from './components/Navbar-client.vue';
+import store from './store';
 export default {
   name: 'App',
+  data(){
+    return{
+      isAuthenticate: store.getters.isAuthenticated,
+      userData: store.getters.StateUser
+    }
+  },
   components: {
-    HelloWorld
-  }
+    Navbar,
+    NavbarClient,
+    Auth,
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+ol{
+  margin: 5px !important;
+}
+.wrapbody{
+  background-color: rgb(213, 213, 213);
 }
 </style>

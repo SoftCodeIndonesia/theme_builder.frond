@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "../../../../.."
+    },
+    {
+      "path": "../../../../../../web-api/express-squelize-mysql"
+    },
+    {
+      "path": "../../../../../../test"
+    }
+  ],
+  "settings": {}
+}
