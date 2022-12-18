@@ -4,6 +4,9 @@
             <div class="col-sm-4">
                 <div class="card login-page-content">
                     <form @submit.prevent="onSubmit">
+                        <div class="card-header">
+                            Account
+                        </div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Email</label>
