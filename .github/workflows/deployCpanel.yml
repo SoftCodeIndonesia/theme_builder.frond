@@ -8,7 +8,10 @@ jobs:
     - with: 
         fetch-deph: 2
       uses: actions/checkout@v2.1.0
-    
+    - name: Installing project dependencies
+      run: npm install
+    - name: Building the project
+      run: npm run build
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
