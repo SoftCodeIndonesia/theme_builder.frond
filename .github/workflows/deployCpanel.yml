@@ -8,6 +8,7 @@ jobs:
     - with: 
         fetch-deph: 2
       uses: actions/checkout@v2.1.0
+    - uses: actions/setup-node@master
     - name: Installing project dependencies
       run: npm install
     - name: Building the project
