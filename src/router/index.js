@@ -12,6 +12,11 @@ import ClientDashboard from '../module/client/dashboard/views/Client-Dashboard.v
 import TemplateBuild from '../module/client/template/views/Template-build.vue';
 import TemplateCreate from '../module/client/template/views/Template-create.vue';
 import ClientView from '../module/client/dashboard/views/Client-view.vue';
+import RulesView from '../module/admin/rules/views/Rules-view.vue';
+import RulesData from '../module/admin/rules/views/Rules.data.vue';
+import CreateRulesView from '../module/admin/rules/views/Create.view.vue';
+import DetailRules from '../module/admin/rules/views/Detail.rules.vue';
+import UpdateRules from '../module/admin/rules/views/Update.rule.vue';
 // import App from '../App.vue'
 import store from '../store';
 
@@ -122,6 +127,98 @@ const routes = [
         }
     },
     {
+        path: '/rules',
+        name: 'rules',
+        component: RulesView,
+        meta: { 
+            requiresAuth: true,
+            role: ['admin','developer'],
+            redirect: '/client',
+            breadCrumb: [
+                {
+                  text: 'Rules',
+                  active: true
+                }
+            ]
+        },
+        children: [
+            {
+                path: '',
+                name: 'rules',
+                component: RulesData,
+                meta: { 
+                    requiresAuth: true,
+                    role: ['admin','developer'],
+                    breadCrumb: [
+                        {
+                          text: 'Rules'
+                        }
+                    ]
+                },
+            },
+            {
+                path: "/rules/create",
+                name: 'create-rules',
+                component: CreateRulesView,
+                meta: { 
+                    requiresAuth: true,
+                    role: ['admin','developer'],
+                    breadCrumb: [
+                        {
+                          text: 'Rules',
+                          active: false,
+                          to: "/rules"
+                        },
+                        {
+                            text: 'Create-rules',
+                            active: true,
+                        }
+                    ]
+                },
+            },
+            {
+                path: "/rules/detail/:id",
+                name: 'detail-rules',
+                component: DetailRules,
+                meta: { 
+                    requiresAuth: true,
+                    role: ['admin','developer'],
+                    breadCrumb: [
+                        {
+                          text: 'Rules',
+                          active: false,
+                          to: "/rules"
+                        },
+                        {
+                            text: 'Detail-rules',
+                            active: true,
+                        }
+                    ]
+                },
+            },
+            {
+                path: "/rules/:id",
+                name: 'edit-rules',
+                component: UpdateRules,
+                meta: { 
+                    requiresAuth: true,
+                    role: ['admin','developer'],
+                    breadCrumb: [
+                        {
+                          text: 'Rules',
+                          active: false,
+                          to: "/rules"
+                        },
+                        {
+                            text: 'Edit',
+                            active: true,
+                        }
+                    ]
+                },
+            },
+        ]
+    },
+    {
         path: '/section',
         name: 'section',
         component: Section,
@@ -186,7 +283,6 @@ const router = createRouter({
   })
   
 router.beforeEach((to, from, next) => {
-    console.log(store.state.authServices.user);
     if(to.matched.some((record) => record.path)){
         if (to.matched.some((record) => record.meta.requiresAuth)) {
             
@@ -199,13 +295,17 @@ router.beforeEach((to, from, next) => {
         to.matched.forEach(element => {
             if(element.meta){
                 if(element.meta.role){
-                    if(element.meta.role.includes(store.state.authServices.user.rules.name) == false){
-                        if(element.meta.redirect){
-                            next(element.meta.redirect);
-                        }else{
-                            next("/pagenotfound");
+                    
+                    if(store.state.authServices.user.rules){
+                        if(element.meta.role.includes(store.state.authServices.user.rules.name) == false){
+                            if(element.meta.redirect){
+                                next(element.meta.redirect);
+                            }
                         }
                     }
+
+                    
+                    
                 }
             }
         });        

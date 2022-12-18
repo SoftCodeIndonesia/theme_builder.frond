@@ -29,6 +29,7 @@
                                 <div v-if="this.loadState" class="btn btn-primary col-sm-12">Loading.....</div>
                                 <button v-else type="submit" :disabled="v$.form.$invalid" class="btn btn-primary col-sm-12">Login</button>
                             </div>
+                            
                             <p v-if="this.errorSignUpMessage != null" class="text-danger">{{this.errorSignUpMessage}}</p>
                             <p>Sudah punya akun? <router-link to="/auth/signin">Masuk disini</router-link></p>
                         </div>
@@ -40,9 +41,12 @@
 </template>
 
 <script>
+
 import useVuelidate from '@vuelidate/core';
 import { required, email, minLength, sameAs } from '@vuelidate/validators';
 import api from '../../../config/api';
+
+
 export default {
     setup () {
         return { v$: useVuelidate() }
@@ -58,6 +62,7 @@ export default {
                 email: null,
                 password: null,
                 confirmPassword: null,
+                providerId: 'App-theme-builder',
             }
         }
     },
@@ -74,6 +79,7 @@ export default {
         }
     },
     methods: {
+        
         async onSignUp(){
             this.loadState = true;
             const response = await api.POST('/auth', {rules_id: this.form.rules_id,username: this.form.username,email: this.form.email, password: this.form.password}, false);

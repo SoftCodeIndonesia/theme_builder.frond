@@ -3,13 +3,16 @@ import App from './App.vue'
 import route from './router'
 import store from './store';
 import axios from 'axios';
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+require('dotenv').config();
+
 library.add(fas);
 import { far } from '@fortawesome/free-regular-svg-icons';
 library.add(far);
-import { dom } from "@fortawesome/fontawesome-svg-core";
+library.add(fab);
 dom.watch();
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -36,11 +39,19 @@ axios.interceptors.response.use(undefined, function(error) {
     }
 });
 
+// Import the functions you need from the SDKs you need
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+
 
 const vue = createApp(App);
 
 vue.use(store);
 vue.use(DataTable);
-// vue.use(BootstrapVue3);
 vue.component("font-awesome-icon", FontAwesomeIcon);
 vue.use(route).mount('#app');

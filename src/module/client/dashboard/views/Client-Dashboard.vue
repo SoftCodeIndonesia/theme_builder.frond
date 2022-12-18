@@ -19,7 +19,10 @@
     </div>
 
     <div class="container">
-        <div class="row mt-2">
+        <div v-if="this.loadState">
+            <p class="text-center">Loading......</p>
+        </div>
+        <div class="row mt-2" v-else>
             <div class="col-sm-3" v-for="template, index in this.templates" v-bind:key="index">
                 <div class="card">
                     <div class="card-body">
@@ -71,7 +74,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
                     </div>
                 </div>
             </form>
@@ -141,6 +144,7 @@ export default {
             await this.retrieveTemplate();
         },
         async retrieveTemplate(){
+            this.loadState = true;
             const response = await api.GET('/template');
             if(response.status){
                 this.templates = response.payload;

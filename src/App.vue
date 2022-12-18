@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.isAuthenticate">
+  <div v-if="this.isAuthenticate && this.userData.rules !== undefined ">
     <div v-if="['admin','developer'].includes(this.userData.rules.name)">
       <Navbar/>
     </div>
@@ -9,13 +9,11 @@
     <div class="container mb-3">
         <div class="row mt-3">
             <div class="col-sm-12">
-                <div class="card">
-                  <nav aria-label="breadcrumb">
+              <nav aria-label="breadcrumb">
                       <ol class="breadcrumb">
                           <li class="breadcrumb-item" :class="{active:breadCrumb.active }" v-for="breadCrumb, index in this.$route.meta.breadCrumb" v-bind:key="index"> <router-link v-if="breadCrumb.active == false" :to="breadCrumb.to">{{breadCrumb.text}}</router-link> <span v-else>{{breadCrumb.text}}</span> </li>
                       </ol>
                   </nav>
-                </div>
             </div>
         </div>
     </div>

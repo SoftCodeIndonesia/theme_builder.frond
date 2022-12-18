@@ -3,30 +3,35 @@
         <div class="row mt-5">
             <div class="col-sm-3">
                 <div class="list-group mt-2" v-for="(item, index) in this.viewCollapseComponent" v-bind:key="index">
-                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between active" aria-current="true">
                         {{item.name}}
+                        <span class="badge bg-danger rounded-pill" @click.prevent="this.deleteSection(item.id)" v-if="item.components.length == 0"><i class="fa fa-fw fa-trash"></i></span>
+                        <!-- <span class="badge bg-danger rounded-pill" v-else><i class="fa fa-fw fa-trash"></i></span> -->
                     </a>
                     
                     <a href="#" :data-id="comp.id" @click.prevent='this.onComponentClick(comp)' class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" v-for="(comp, i) in item.components" ref="list-group-component" v-bind:key="i">{{comp.name}} <span class="badge bg-danger rounded-pill" @click.prevent='this.onOpenModalConfirm(comp)'><i class="fa fa-fw fa-trash"></i></span> </a>
                 </div>
             </div>
             <div class="col-sm">
-                <form @submit.prevent="this.submitSection">
-                    <div class="card">
-                        <div class="card-header">
-                            Add Section
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Section Name</label>
-                                <input type="text" class="form-control" id="name" v-model="this.form.section.name" placeholder="section name" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-sm btn-primary">simpan</button>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm">Add Section</div>
+                            <div class="col-sm text-end"><button @click="this.toggleSection" class="btn btn-sm btn-primary"><span class="fa fa-fw fa-plus"></span></button></div>
                         </div>
                     </div>
-                </form>
+                        <form @submit.prevent="this.submitSection" :class="{'d-none': this.dNone}">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Section Name</label>
+                                    <input type="text" class="form-control" id="name" v-model="this.form.section.name" placeholder="section name" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-sm btn-primary">simpan</button>
+                            </div>
+                        </form>
+                    </div>
                 <form @submit.prevent="this.submitComponent">
                     <div class="card mt-2">
                         <div class="card-header">
@@ -88,6 +93,7 @@ export default {
     // },
     data(){
         return {
+            dNone: true,
             modalComfirm: false,
             component: null,
             form: {
@@ -103,6 +109,13 @@ export default {
         }
     },
     methods: {
+        async deleteSection(section_id){
+            await api.DELETE('/section/' + section_id);
+            await this.fetchSection();
+        },
+        toggleSection(){
+            this.dNone = this.dNone == true ? false : true;
+        },
         async onDeleteComponent(){
             const response = await api.DELETE('/component/' + this.component.id);
             console.log(response);
@@ -142,6 +155,7 @@ export default {
 
         },
         generateOptionSection(){
+            this.form.optionsSection = [];
             this.viewCollapseComponent.forEach(element => {
                 this.form.optionsSection.push({ value: element.id, text: element.name });
             });
