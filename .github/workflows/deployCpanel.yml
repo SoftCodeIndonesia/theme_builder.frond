@@ -13,8 +13,8 @@ jobs:
         run: npm install --legacy-peer-deps --force
       - name: Building the project
         run: npm run build
-      - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.1
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
