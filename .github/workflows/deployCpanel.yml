@@ -10,7 +10,7 @@ jobs:
       uses: actions/checkout@v2.1.0
     - uses: actions/setup-node@master
     - name: Installing project dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps --force
     - name: Building the project
       run: npm run build
     - name: FTP-Deploy-Action
