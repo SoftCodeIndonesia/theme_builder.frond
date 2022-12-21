@@ -14,8 +14,15 @@ jobs:
     - name: Building the project
       run: npm run build
     - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      uses: SamKirkland/FTP-Deploy-Action@4.3.1
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        exclude: |
+          .git/**
+          .git**
+          .git*/**
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
