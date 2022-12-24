@@ -5,7 +5,7 @@
                 <div class="card login-page-content">
                     <form @submit.prevent="onSubmit">
                         <div class="card-header">
-                            Logged In
+                            Account
                         </div>
                         <div class="card-body">
                             <div class="mb-3">

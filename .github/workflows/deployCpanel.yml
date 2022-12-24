@@ -5,24 +5,29 @@ jobs:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps:
-    - with: 
-        fetch-deph: 2
-      uses: actions/checkout@v2.1.0
-    - uses: actions/setup-node@master
-    - name: Installing project dependencies
-      run: npm install --legacy-peer-deps --force
-    - name: Building the project
-      run: npm run build
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@4.3.1
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        exclude: |
-          .git/**
-          .git**
-          .git*/**
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
+      - with:
+          fetch-deph: 2
+        uses: actions/checkout@v2.1.0
+      - uses: actions/setup-node@master
+      - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: ".env.prod"
+          target: ".env"
+      - name: Installing project dependencies
+        run: npm install --legacy-peer-deps --force
+      - name: Building the project
+        run: npm run build
+      - name: FTP-Deploy-Action
+        uses: SamKirkland/FTP-Deploy-Action@4.3.1
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          exclude: |
+            .git/**
+            .git**
+            .git*/**
+            **/.git*
+            **/.git*/**
+            **/node_modules/**

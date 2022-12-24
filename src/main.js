@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 require('dotenv').config();
-
+const {VUE_APP_API_URI} = process.env;
 library.add(fas);
 import { far } from '@fortawesome/free-regular-svg-icons';
 library.add(far);
@@ -26,7 +26,7 @@ import DataTablesLib from 'datatables.net-bs5';
 DataTable.use(DataTablesLib);
 
 axios.defaults.withCredentials = false;
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL = VUE_APP_API_URI;
 
 axios.interceptors.response.use(undefined, function(error) {
     if (error) {
