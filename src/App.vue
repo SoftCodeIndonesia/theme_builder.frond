@@ -43,6 +43,9 @@ export default {
     NavbarClient,
     Auth,
   },
+  created(){
+    console.log(store.getters.StateUser)
+  }
 }
 </script>
 
@@ -50,7 +53,7 @@ export default {
 ol{
   margin: 5px !important;
 }
-.wrapbody{
+/* .wrapbody{
   background-color: rgb(213, 213, 213);
-}
+} */
 </style>

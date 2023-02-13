@@ -7,7 +7,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-sm-12">
-                <div class="card" v-for="rule, index in rules" v-bind:key="index">
+                <div class="card my-1" v-for="rule, index in rules" v-bind:key="index">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm">

@@ -4,6 +4,9 @@
             <div class="col-sm-4">
                 <div class="card register-page-content">
                     <form @submit.prevent="this.onSignUp">
+                        <div class="card-header">
+                            Daftar Akun
+                        </div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Username</label>
@@ -27,7 +30,7 @@
                             </div>
                             <div class="mb-3">
                                 <div v-if="this.loadState" class="btn btn-primary col-sm-12">Loading.....</div>
-                                <button v-else type="submit" :disabled="v$.form.$invalid" class="btn btn-primary col-sm-12">Login</button>
+                                <button v-else type="submit" :disabled="v$.form.$invalid" class="btn btn-primary col-sm-12">SignUp</button>
                             </div>
                             
                             <p v-if="this.errorSignUpMessage != null" class="text-danger">{{this.errorSignUpMessage}}</p>
@@ -57,7 +60,7 @@ export default {
             errorSignUpMessage: null,
             loadState: false,
             form: {
-                rules_id: 1,
+                rules_id: 2,
                 username: null,
                 email: null,
                 password: null,
@@ -82,7 +85,13 @@ export default {
         
         async onSignUp(){
             this.loadState = true;
-            const response = await api.POST('/auth', {rules_id: this.form.rules_id,username: this.form.username,email: this.form.email, password: this.form.password}, false);
+            const response = await api.POST('/auth', {
+                rules_id: this.form.rules_id,
+                username: this.form.username,
+                email: this.form.email, 
+                password: this.form.password,
+                providerId: this.form.providerId,
+            }, false);
             if(response.status){
                 this.$router.push('/auth/signin')
             }else{

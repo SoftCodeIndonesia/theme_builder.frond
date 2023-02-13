@@ -17,6 +17,7 @@ import RulesData from '../module/admin/rules/views/Rules.data.vue';
 import CreateRulesView from '../module/admin/rules/views/Create.view.vue';
 import DetailRules from '../module/admin/rules/views/Detail.rules.vue';
 import UpdateRules from '../module/admin/rules/views/Update.rule.vue';
+// import HomePage from '../module/client/home/views/HomePage.vue';
 // import App from '../App.vue'
 import store from '../store';
 
@@ -26,6 +27,12 @@ const routes = [
         name: 'pagenotfound',
         component: PageNotFound,
     },
+    // {
+    //     path: '/',
+    //     name: 'landing',
+    //     component: HomePage,
+    // },
+    
 
     {
         path: '/',
@@ -284,6 +291,7 @@ const router = createRouter({
   
 router.beforeEach((to, from, next) => {
     if(to.matched.some((record) => record.path)){
+        
         if (to.matched.some((record) => record.meta.requiresAuth)) {
             
             if (store.getters.isAuthenticated == false) {
@@ -307,6 +315,8 @@ router.beforeEach((to, from, next) => {
                     
                     
                 }
+            }else{
+                next();
             }
         });        
 

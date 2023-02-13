@@ -5,3 +5,8 @@ exports.matchValue = (value, source) => {
         return false;
     }
 }
+
+exports.isDeadline = (expired) => {
+    let today = new Date();
+    return today < expired;
+  }

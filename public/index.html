@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    
   </head>
   <body class="wrapbody">
     <noscript>
@@ -13,5 +14,46 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
+    <script>
+
+      // var items = document.querySelectorAll(
+      //   "*[data-animate-in], *[data-detect-viewport]"
+      // );
+      
+      // waiting = false,
+      // w = $(window);
+
+      // w.on("resize scroll", function() {
+      //     if (waiting) {
+      //       return;
+      //     }
+      //     waiting = true;
+      //     detection();
+
+      //     setTimeout(function() {
+      //       waiting = false;
+      //     }, 100);
+      //   });
+
+      //   setTimeout(function() {
+      //   detection();
+      // }, 500);
+
+      // console.log(items)
+
+      // for (var i = 0; i < items.length; i++) {
+      //   var d = 0,
+      //     el = $(items[i]);
+      //   if (items[i].getAttribute("data-animate-in-delay")) {
+      //     d = items[i].getAttribute("data-animate-in-delay") / 1000 + "s";
+      //   } else {
+      //     d = 0;
+      //   }
+      //   el.css("transition-delay", d);
+      // }
+
+    </script>
   </body>
+  
 </html>
