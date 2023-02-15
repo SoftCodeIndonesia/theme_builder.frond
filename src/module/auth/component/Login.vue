@@ -1,50 +1,50 @@
 <template>
-    <div class="container">
-        <div class="row align-items-center justify-content-center">
+    <div class="row login-page">
+    <!-- <div class="row align-items-center justify-content-center login-page"> -->
+            <div class="col-sm-8 banner-img"> <img src="../../../assets/img/app-img/bg-login.jpg" class="card-img-top" alt="..."></div>
             <div class="col-sm-4">
-                <div class="card login-page-content">
-                    <form @submit.prevent="onSubmit">
-                        <div class="card-header">
-                            Masuk
+                <div class="login-page-content">
+                    <div class="container">
+                        <div class="row login-page-header">
+                            <div class="col-sm-12">
+                                <h2 class="text-center">Account</h2>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Email</label>
-                                <input type="email" class="form-control" v-model="this.email" id="exampleFormControlInput1" placeholder="name@example.com" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Password</label>
-                                <input type="password" class="form-control" v-model="this.password" id="exampleFormControlInput1" placeholder="password" required>
-                            </div>
-                            <p class="text-start">Belum punya akun? <router-link to="/auth/signup">Daftar disini</router-link></p>
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-success col-sm-12">Login</button>
-                            </div>
-                            <p class="text-center text-muted">OR</p>
-                            <div class="row justify-content-center mb-3">
-                                <div class="col-sm-3 text-center">
-
-                                    <a @click.prevent="this.withGoogle" class="btn btn-danger"><i class="fa-brands fa-fw fa-google"></i></a>
+                        <div class="row justify-content-center align-middle">
+                            <form @submit.prevent="onSubmit" class="col-sm-8 ">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Email</label>
+                                    <input type="email" class="form-control" v-model="this.email" id="exampleFormControlInput1" placeholder="name@example.com" required>
                                 </div>
-                                <div class="col-sm-3 text-center">
-
-                                    <a @click.prevent="this.withFacebook" class="btn btn-primary"><i class="fa-brands fa-fw fa-facebook"></i></a>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Password</label>
+                                    <input type="password" class="form-control" v-model="this.password" id="exampleFormControlInput1" placeholder="password" required>
                                 </div>
-                                <div class="col-sm-3 text-center">
-
-                                    <a @click.prevent="this.withGithub" class="btn btn-dark"><i class="fa-brands fa-fw fa-github"></i></a>
+                                <p class="text-start">Belum punya akun? <router-link to="/auth/signup">Daftar disini</router-link></p>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-success col-sm-12" :disabled="this.username == '' || this.password == ''">Login</button>
                                 </div>
-                            </div>
-                            
-                            <!-- <a @click.prevent="this.withFacebook" class="btn btn-primary col-sm-12 mb-3">continue with facebook</a>
-                            <a @click.prevent="this.withGithub" class="btn btn-dark col-sm-12 mb-3">continue with Github</a> -->
-                            
+                                <p class="text-center text-muted">OR</p>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-sm-3 text-center">
+
+                                        <a @click.prevent="this.withGoogle" class="btn btn-danger"><i class="fa-brands fa-fw fa-google"></i></a>
+                                    </div>
+                                    <div class="col-sm-3 text-center">
+
+                                        <a @click.prevent="this.withFacebook" class="btn btn-primary"><i class="fa-brands fa-fw fa-facebook"></i></a>
+                                    </div>
+                                    <div class="col-sm-3 text-center">
+
+                                        <a @click.prevent="this.withGithub" class="btn btn-dark"><i class="fa-brands fa-fw fa-github"></i></a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -134,5 +134,46 @@ export default {
 </script>
     
 <style>
- 
+  /* .banner-img{
+    background-image: url('../../../assets/img/app-img/bg-login.jpg');
+    background-repeat: repeat;
+    background-size: cover;
+  } */
+
+  .login-page{
+    padding: 0px !important;
+    margin: 0px !important;
+    height: 100% !important;
+  }
+  .login-page-content{
+    height: 100% !important;
+    align-items: center !important;
+    vertical-align: middle;
+  }
+
+  .login-page-header {
+    padding-top: 20% !important;
+    padding-bottom: 20% !important;
+  }
+
+  .row > *{
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+
+  .card-img-top{
+    height: 100% !important;
+  }
+  #app{
+    height: 100% !important;
+  }
+  
+
+  #app>div {
+    height: 100%;
+  }
+  
+  html, body {
+        height: 100%;
+}
 </style>

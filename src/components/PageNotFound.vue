@@ -9,9 +9,3 @@
         </div>
     </div>
 </template>
-
-<style>
-.login-page-content{
-    margin-top: 50% !important;
-}
-</style>

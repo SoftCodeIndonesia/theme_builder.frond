@@ -19,6 +19,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.esm';
 import 'bootstrap/dist/js/bootstrap.bundle';
 
+import "./assets/css/main.css";
+
 
 import DataTable from 'datatables.net-vue3'
 import DataTablesLib from 'datatables.net-bs5';

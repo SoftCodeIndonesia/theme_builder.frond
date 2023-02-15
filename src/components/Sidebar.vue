@@ -2,17 +2,13 @@
     <!-- sidebar -->
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header">
-            <router-link to="/" id="offcanvasWithBothOptionsLabel">Main Menu</router-link>
+            <router-link to="/" class="text-muted list-group-item fw-bold text-dark" id="offcanvasWithBothOptionsLabel">MANAGEMENT</router-link>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <p class="font-bold text-muted">MANAGEMENT</p>
             <div class="list-group list-group-menu-sidebar">
-                <router-link to="/rules" class="list-group-item text-muted border-none px-0 list-group-item-action">Role</router-link>
-                <router-link to="/user" class="list-group-item text-muted border-none px-0 list-group-item-action">Users</router-link>
-                <!-- <router-link to="/section" class="list-group-item text-muted border-none px-0 list-group-item-action">Section</router-link> -->
-                <router-link to="/component" class="list-group-item text-muted border-none px-0 list-group-item-action">Component</router-link>
-                <router-link to="/meta" class="list-group-item text-muted border-none px-0 list-group-item-action">Meta Data</router-link>
+                <a href="" v-for="data, key in this.menu" v-bind:key="key" @click.prevent="this.to(data.path)" class="list-group-item text-muted border-none px-0 list-group-item-action">{{data.name}}</a>
+                
                 <!-- <a class="list-group-item border-none px-0 list-group-item-action" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Link with href
                 </a>
@@ -26,3 +22,45 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+    name: "sidebar",
+    data(){
+        return {
+            title: 'MANAGEMENT',
+            menu: [
+                {
+                    name: 'Role',
+                    path: '/rules'
+                },
+                {
+                    name: 'Users',
+                    path: '/user'
+                },
+                {
+                    name: 'Component',
+                    path: '/component'
+                },
+                {
+                    name: 'Meta Data',
+                    path: '/meta'
+                },
+            ]
+        }
+    },
+    methods: {
+        to(path){
+            this.modal = false;
+            this.$router.push({ path: path })
+        }
+    }
+    
+}
+</script>
+<style>
+    .offcanvas {
+        /* background-color: transparent !important; */
+        margin: 1% 1% !important;
+        border-radius: .5rem;
+    }
+</style>
