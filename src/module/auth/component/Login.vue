@@ -57,7 +57,7 @@ export default {
     data(){
         return {
             username: '',
-            rules_id: 1,
+            rules_id: 2,
             email: '',
             password: '',
             avatar_url: '',
