@@ -14,12 +14,12 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 library.add(far);
 library.add(fab);
 dom.watch();
-import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap/dist/js/bootstrap.esm';
-import 'bootstrap/dist/js/bootstrap.bundle';
+// import "bootstrap";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import 'bootstrap/dist/js/bootstrap.esm';
+// import 'bootstrap/dist/js/bootstrap.bundle';
 
-import "./assets/css/main.css";
+
 
 
 import DataTable from 'datatables.net-vue3'
@@ -48,8 +48,6 @@ axios.interceptors.response.use(undefined, function(error) {
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
-
 
 const vue = createApp(App);
 

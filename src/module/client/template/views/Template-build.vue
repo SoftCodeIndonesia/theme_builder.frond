@@ -1,21 +1,11 @@
 <template>
-    <div class="container">
-        <div class="row mt-5">
-            <span> 
-                <span class="dropdown mr-2">
-                    <button class="btn btn-sm btn-success dropdown-toggle" @click="this.downloadEvent" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Download
-                    </button>
-                    <div class="dropdown-menu" :class="{ show: this.dropdownDownloadState }" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" @click.prevent="this.downloadWithBootstrap">Boostrap</a>
-                    </div>
-                </span>
-                <button type="button" class="btn btn-sm btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Add Component</button>
-               
-                
-            </span>
-        </div>
-        <div class="row mt-3">
+    
+    <NavbarBuild :template="this.template" v-if="this.loading == false" />
+    <div class="container" v-if="this.components.length > 0">
+        <!-- <div class="d-flex">
+            <button type="button" class="btn btn-sm btn-primary col-sm float-right" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Add Component</button>
+        </div> -->
+        <div class="row my-4">
             <div v-if="this.loading">
                 <p class="text-center">loading</p>
             </div>
@@ -28,39 +18,52 @@
         </div>
     </div>
 
-    
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Component</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="list-group mt-2" v-for="(item, index) in this.viewCollapseComponent" v-bind:key="index">
-                    <div class="list-group-item list-group-item-action active" aria-current="true">
-                        {{item.name}}
+    <div class="canvas py-4" id="canvas" v-else>
+        <div class="page-center">
+            <div class="page-content m-auto">
+                <div id="add">
+                    <div class="center mb-2">
+                        <img src="asset/ic-add.svg" alt="Icon Add">
                     </div>
-                    <a href="#" @click.prevent="" @click="this.onComponentSelected(comp)" class="list-group-item list-group-item-action" data-bs-dismiss="modal" aria-label="Close" v-for="(comp, i) in item.components" v-bind:key="i">{{comp.name}}</a>
+                <p>Add new section here</p>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div>
             </div>
         </div>
     </div>
+
+    
+      <div class="shadow fixed-bottom nav-section-element">
+        <div class="page-center mx-3">
+          <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav d-flex gap-3">
+                <li class="nav-item dropdown-element-button" @click="this.onDropdownElementButton($event)" v-for="(item, index) in this.viewCollapseComponent" v-bind:key="index">
+                    <div class="nav-link btn dropdown-toggle button-section-menu"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{this.helper.capitalizeEveryWord(item.name)}}
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-element-section">
+                        <li><a class="dropdown-item" href="#" @click.prevent="this.onComponentSelected(comp)" v-for="(comp, i) in item.components" v-bind:key="i">{{this.helper.capitalizeEveryWord(comp.name)}}</a></li>
+                    </ul>
+                </li>
+                
+                
+            </ul>
+          </nav>
+        </div>
+      </div>
+
 
 </template>
 
 <script>
 import api from '../../../../config/api';
 import axios from 'axios';
+import NavbarBuild from '../component/Navbar-build.vue';
+import helper from '../../../../helper/index';
 export default {
     name: 'Template-build',
     data(){
         return {
+            helper: helper,
             dropdownDownloadState: false,
             loading: true,
             template: null,
@@ -69,6 +72,9 @@ export default {
             
             // templateUrl: '';
         }
+    },
+    components: {
+        NavbarBuild,
     },
     methods: {
         async downloadWithBootstrap(){
@@ -113,6 +119,20 @@ export default {
             }
             console.log(response);
         },
+        onDropdownElementButton(event){
+           
+            console.log(event.target.parentElement.childNodes[1].classList);
+            if(event.target.parentElement.childNodes[1].classList.contains('show')){
+                event.target.parentElement.childNodes[1].classList.remove("show");
+            }else{
+                const eventTarget = document.querySelector('.show');
+                
+                if( eventTarget != null && eventTarget.classList.contains('show')){
+                    eventTarget.classList.remove("show")
+                }
+                event.target.parentElement.childNodes[1].classList.add("show");
+            }
+        },
         async syncTeamplate(){
             const response = await api.POST('/template/build', {id: this.$route.params.id});
             
@@ -137,3 +157,38 @@ export default {
 }
 
 </script>
+<style scoped>
+    .button-section-menu{
+        cursor: pointer;
+        border-radius: .5rem;
+    }
+    .button-section-menu:hover{
+        background-color: rgba(108,93,211,.05);
+    }
+    ul.navbar-nav {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    .nav-section-element{
+        margin: 3%;
+        border-radius: .5rem !important;
+    }
+
+    .nav-section-element > .page-center {
+        margin: 1%;
+    }
+
+    .dropdown-menu-element-section{
+        position: fixed;
+        bottom: 0;
+        margin-bottom: 7%;
+        float: none !important;
+        /* transition: margin 2s; */
+    }
+</style>
+<style scoped>
+    /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css';
+    @import '../../../../assets/css/builder/main.css'; */
+    @import '../../../../assets/css/builder/start.css';
+</style>

@@ -22,7 +22,8 @@
                                 </div>
                                 <p class="text-start">Belum punya akun? <router-link to="/auth/signup">Daftar disini</router-link></p>
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-success col-sm-12" :disabled="this.username == '' || this.password == ''">Login</button>
+                                    <button type="submit" class="btn btn-success col-sm-12">Login</button>
+                                    <!-- <button type="submit" class="btn btn-success col-sm-12" :disabled="this.username == '' || this.password == ''">Login</button> -->
                                 </div>
                                 <p class="text-center text-muted">OR</p>
                                 <div class="row justify-content-center mb-3">

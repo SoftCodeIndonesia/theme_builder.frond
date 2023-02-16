@@ -1,9 +1,9 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-white">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-bars"></i></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <a class="navbar-brand" href="#" @click.prevent="this.toggleSideBar()" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-bars"></i></a>
+            <button class="navbar-toggler" @click.prevent="this.toggleSideBar()" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -23,7 +23,7 @@
                 <div class="btn-group">
                    
                     <button @click="this.toggleDropdown($event)" type="button" class="btn btn-danger dropdown-toggle">
-                        <img :src="this.userData.avatar" class="rounded rounded-circle" width="30" :alt="this.userData.username"> <span class="mx-2">{{ this.userData.username }}</span>
+                        <img :src="this.userData.avatar == '' ? this.tmpAvatar : this.userData.avatar" class="rounded rounded-circle" width="30" :alt="this.userData.username"> <span class="mx-2">{{ this.userData.username }}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-action-profile">
                         <li><a class="dropdown-item" href="#">Action</a></li>
@@ -39,7 +39,7 @@
         </div>
     </nav>
 
-    <Sidebar/>
+    <Sidebar :openSideBar="this.sidebarState"  />
 </template>
 
 <script>
@@ -50,6 +50,8 @@ export default {
     name: "Navbar",
     data(){
         return {
+            sidebarState: false,
+            tmpAvatar: 'https://atlncs.org/wp-content/themes/ancs-sixteen/images/img_headshot.png',
             userData: store.getters.StateUser,
         }
     },
@@ -58,6 +60,16 @@ export default {
     },
     methods: {
         ...mapActions(['LogOut']),
+        toggleSideBar(){
+            if(this.sidebarState){
+                this.sidebarState = false;
+            }else{
+                this.sidebarState = true;
+            }
+            console.log(Sidebar.data);
+            Sidebar.props.openSideBar = this.sidebarState;
+ 
+        },
         logout(e){
             e.preventDefault();
             this.LogOut();

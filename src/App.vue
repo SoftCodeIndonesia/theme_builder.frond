@@ -3,10 +3,10 @@
     <div v-if="['admin','developer'].includes(this.userData.rules.name)">
       <Navbar/>
     </div>
-    <div v-else>
+    <!-- <div v-else>
       <NavbarClient/>
-    </div>
-    <div class="container mb-3">
+    </div> -->
+    <div class="container mb-3" v-if="['admin','developer'].includes(this.userData.rules.name)">
         <div class="row mt-3">
             <div class="col-sm-12">
               <nav aria-label="breadcrumb">
@@ -28,7 +28,7 @@
 <script>
 import Auth from './module/auth/views/Auth.vue';
 import Navbar from './components/Navbar.vue';
-import NavbarClient from './components/Navbar-client.vue';
+// import NavbarClient from './components/Navbar-client.vue';
 import store from './store';
 export default {
   name: 'App',
@@ -40,7 +40,7 @@ export default {
   },
   components: {
     Navbar,
-    NavbarClient,
+    // NavbarClient,
     Auth,
   },
   created(){

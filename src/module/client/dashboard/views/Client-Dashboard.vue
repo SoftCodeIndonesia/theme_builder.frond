@@ -1,28 +1,32 @@
 <template>
-    
-    <div class="container">
-        
-        <div class="row mt-3">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button type="button" class="btn btn-sm btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#createTemplate" >Create template</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="card-body"><TemplateListVue></TemplateListVue></div> -->
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <NavbarClient :onCreate="this.createTemplate" />
     <div class="container">
         <div v-if="this.loadState">
             <p class="text-center">Loading......</p>
         </div>
-        <div class="row mt-2" v-else>
+        <div class="container-recently py-5" v-else>
+            <div class="page-center">
+                <div class="content-recently">
+                    <div class="header d-flex space-between my-auto">
+                        <h3 class="bold">Recently viewed</h3>
+                        <a href="#" class="my-auto nav-link">See all</a>
+                    </div>
+                    <div class="d-grid temp-column-4 gap-3 mt-4">
+                        <div class="card" v-for="template, index in this.templates" v-bind:key="index" @click.prevent="this.toEdit(template.id)">
+                            <img :src="template.source" alt="Project">
+                            <div class="detail-card-custom p-3">
+                                <p class="semibold">{{template.name}}</p>
+                                <span>Edited 3 hours ago</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- <div class="row mt-2">
             <div class="col-sm-3" v-for="template, index in this.templates" v-bind:key="index">
                 <div class="card">
                     <div class="card-body">
@@ -42,50 +46,22 @@
                                     <a class="dropdown-item" href="#" @click.prevent="this.deleteTemplate(template.id, $event)" >Delete</a>
                                 </div>
                             </div>
-                            <!-- <i class="fa-solid btn fa-ellipsis-vertical col-sm-1" data-toggle="dropdown" aria-expanded="false">
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </i> -->
+                           
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
-    <div class="modal fade" id="createTemplate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createTemplate" aria-hidden="true">
-        <div class="modal-dialog">
-            <form @submit.prevent="this.createTemplate">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Template</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="template-name" class="form-label">Template name</label>
-                                <input type="text" class="form-control" v-model="this.form.template_name" id="template-name" placeholder="template name" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 </template>
 
 <script>
 
 import api from '../../../../config/api';
 import axios from 'axios';
+import NavbarClient from "../../../../components/Navbar-client.vue";
+
 export default {
     name: 'Client-Dashboard',
     data(){
@@ -93,13 +69,15 @@ export default {
             dropdownDownloadState: false,
             loadState: true,
             templates: [],
-            form: {
-                template_name: null,
-                
-            }
+            
         }
     },
+    components: {
+        NavbarClient,
+    },
+    
     methods: {
+
         async deleteTemplate(template_id, event) {
             this.toggleDropdown(event);
             await api.DELETE(`/template/${template_id}`);
@@ -140,7 +118,10 @@ export default {
             });
         },
         async createTemplate(){
-            await api.POST('/template', {name: this.form.template_name});
+            const response = await api.POST('/template', {name: `untitle-${this.templates.length}`});
+            if(response.status){
+                this.toEdit(response.payload.id)
+            }
             await this.retrieveTemplate();
         },
         async retrieveTemplate(){
@@ -163,4 +144,10 @@ export default {
     width: 100% !important;
     text-overflow: ellipsis !important;
 }
+</style>
+
+<style>
+    @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css';
+    @import '../../../../assets/css/builder/main.css';
+    @import '../../../../assets/css/builder/home.css';
 </style>
