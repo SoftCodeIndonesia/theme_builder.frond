@@ -135,10 +135,11 @@ export default {
         },
         async syncTeamplate(){
             const response = await api.POST('/template/build', {id: this.$route.params.id});
-            
+            console.log(response);
             if(response.status){
                 this.template = response.payload.template;
                 this.components = response.payload.components;
+                
                 // this.templateUrl = ''
             }
 

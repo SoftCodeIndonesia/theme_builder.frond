@@ -6,7 +6,7 @@
     <!-- <div v-else>
       <NavbarClient/>
     </div> -->
-    <div class="container mb-3" v-if="['admin','developer'].includes(this.userData.rules.name)">
+    <!-- <div class="container mb-3" v-if="['admin','developer'].includes(this.userData.rules.name)">
         <div class="row mt-3">
             <div class="col-sm-12">
               <nav aria-label="breadcrumb">
@@ -16,7 +16,7 @@
                   </nav>
             </div>
         </div>
-    </div>
+    </div> -->
     <router-view></router-view>
   </div>
   <div v-else>
@@ -52,6 +52,10 @@ export default {
 <style>
 ol{
   margin: 5px !important;
+}
+.row {
+  padding: 0px !important;
+  margin: 0px !important;
 }
 /* .wrapbody{
   background-color: rgb(213, 213, 213);

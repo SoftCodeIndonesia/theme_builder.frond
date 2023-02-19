@@ -3,7 +3,7 @@ import {signInWithPopup, GoogleAuthProvider, FacebookAuthProvider,GithubAuthProv
 import firebaseApp from '../service/firebase_service';
 
 
-const googleProvider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider().addScope('email');
 const facebookProvider = new FacebookAuthProvider();
 const githubAuthProvider = new GithubAuthProvider();
 const auth = getAuth(firebaseApp);

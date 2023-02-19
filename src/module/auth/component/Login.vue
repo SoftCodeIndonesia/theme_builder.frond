@@ -97,6 +97,10 @@ export default {
         async withGoogle(){
             const result = await socialSignIn.signIn(socialSignIn.socialProvider.google);
             const user = result.user.reloadUserInfo.providerUserInfo[0];
+            
+            console.log(result);
+
+
             this.username = user.displayName;
             this.email = user.email ?? '';
             this.avatar_url = user.photoUrl;
