@@ -9,7 +9,7 @@
                             <span class="badge bg-danger rounded-pill" v-if="item.components.length == 0" @click="this.deleteSection(item.id)"><i class="fa fa-fw fa-trash"></i></span>
                         </a>
                         <ul class="dropdown-menu shadow">
-                            <li :data-id="comp.id" @click.prevent='this.onComponentClick(comp)' v-for="(comp, i) in item.components" ref="list-group-component" v-bind:key="i" class="p-2"><a class="dropdown-item section-item d-flex gap-3 justify-content-between" href="#">{{comp.name}} <span class="badge bg-danger rounded-pill" @click="this.onComponentClickDelete(comp)"><i class="fa fa-fw fa-trash"></i></span> </a>  </li>
+                            <li :data-id="comp.id" @click.prevent='this.onComponentClick(comp, item)' v-for="(comp, i) in item.components" ref="list-group-component" v-bind:key="i" class="p-2"><a class="dropdown-item section-item d-flex gap-3 justify-content-between" href="#">{{comp.name}} <span class="badge bg-danger rounded-pill" @click="this.onComponentClickDelete(comp)"><i class="fa fa-fw fa-trash"></i></span> </a>  </li>
                             <li ref="list-group-component" v-bind:key="i" class="p-2"><a class="dropdown-item section-item" href="#" @click.prevent="this.showAddComponent(item)"> <i class="fa fa-fw fa-add"></i> Add Component</a></li>
                         </ul>
                     </div>
@@ -174,9 +174,11 @@ export default {
 
             this.modalComfirm = false;
         },
-        onComponentClick(comp) {
-            this.form.sectionId = comp.section_id;
+        onComponentClick(comp, section) {
+            this.form.sectionId = section.section_id;
+            this.form.section.name = section.name;
             this.form.componentName = comp.name;
+            this.showAddComponent(section)
         },
         onCloseModal(){
             this.modalComfirm = false;
