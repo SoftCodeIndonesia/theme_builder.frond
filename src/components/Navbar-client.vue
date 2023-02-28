@@ -22,7 +22,7 @@
             <a href="#" class="nav-link">
               <div class="profile d-flex my-auto gap-3">
                 <div class="asset my-auto">
-                  <img :src="this.userData.avatar" alt="username" class="h-2xl w-2xl rounded-circle">
+                  <img :src="this.userData.avatar === '' ? this.tmpAvatar : this.userData.avatar " alt="username" class="h-2xl w-2xl rounded-circle">
                 </div>
                 <div class="profile__detail my-auto desktop">
                   <p id="username"><b>{{ this.userData.username }}</b></p>
@@ -64,6 +64,7 @@ export default {
         return {
             userData: store.getters.StateUser,
             template_name: "",
+            tmpAvatar: 'https://atlncs.org/wp-content/themes/ancs-sixteen/images/img_headshot.png',
         }
     },
     props: {

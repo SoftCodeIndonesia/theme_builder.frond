@@ -58,7 +58,7 @@ export default {
     data(){
         return {
             username: '',
-            rules_id: 2,
+            rules_id: 1,
             email: '',
             password: '',
             avatar_url: '',
@@ -96,11 +96,7 @@ export default {
         },
         async withGoogle(){
             const result = await socialSignIn.signIn(socialSignIn.socialProvider.google);
-            const user = result.user.reloadUserInfo.providerUserInfo[0];
-            
-            console.log(result);
-
-
+            const user = result.user.providerData[0];
             this.username = user.displayName;
             this.email = user.email ?? '';
             this.avatar_url = user.photoUrl;
